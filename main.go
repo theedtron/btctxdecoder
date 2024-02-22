@@ -44,8 +44,13 @@ func main() {
 		fmt.Printf("  Previous Tx Hash: %s\n", input.PreviousOutPoint.Hash)
 		fmt.Printf("  Previous Tx Index: %d\n", input.PreviousOutPoint.Index)
 		fmt.Printf("  Script Length: %d\n", len(input.SignatureScript))
-		fmt.Println("  ScriptSig:", hex.EncodeToString(input.SignatureScript))
-		fmt.Println("  Sequence:", input.Sequence)
+		fmt.Printf("  ScriptSig: %s\n", hex.EncodeToString(input.SignatureScript))
+		fmt.Printf("  Sequence: %d\n", input.Sequence)
+		if input.Sequence < 4294967295 {
+			fmt.Printf("  RBF: TRUE")
+		}else {
+			fmt.Printf("  RBF: FALSE")
+		}
 	}
 
 	// Print output details
