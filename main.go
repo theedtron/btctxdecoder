@@ -1,11 +1,11 @@
 package main
 
 import (
+	"bytes"
 	"encoding/hex"
 	"fmt"
-	"os"
-	"bytes"
 	"github.com/btcsuite/btcd/wire"
+	"os"
 )
 
 func main() {
@@ -44,7 +44,8 @@ func main() {
 		fmt.Printf("  Previous Tx Hash: %s\n", input.PreviousOutPoint.Hash)
 		fmt.Printf("  Previous Tx Index: %d\n", input.PreviousOutPoint.Index)
 		fmt.Printf("  Script Length: %d\n", len(input.SignatureScript))
-		fmt.Println("  Script:", hex.EncodeToString(input.SignatureScript))
+		fmt.Println("  ScriptSig:", hex.EncodeToString(input.SignatureScript))
+		fmt.Println("  Sequence:", input.Sequence)
 	}
 
 	// Print output details
@@ -53,7 +54,10 @@ func main() {
 		fmt.Printf("Output %d:\n", i)
 		fmt.Printf("  Value: %d Satoshis\n", output.Value)
 		fmt.Printf("  Script Length: %d\n", len(output.PkScript))
-		fmt.Println("  Script:", hex.EncodeToString(output.PkScript))
+		fmt.Printf("  ScriptPubKey: %s\n", hex.EncodeToString(output.PkScript))
+	}
+
+	if tx.HasWitness() {
+		fmt.Printf("Witness: %s\n", tx.WitnessHash().String())
 	}
 }
-
